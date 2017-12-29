@@ -3,7 +3,7 @@ import unittest
 
 from dict_to_protobuf_to_dict import dict_to_protobuf, protobuf_to_dict
 
-from test.sample_pb2 import MainMessage
+from tests.sample_pb2 import MainMessage
 
 
 class TestProtoUtilModule(unittest.TestCase):
