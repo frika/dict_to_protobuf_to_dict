@@ -76,6 +76,12 @@ def _handle_repeated(values, message, field):
         else:
             message.extend(values)
 
+def _is_type_scalar(val):
+    """
+    Check if the value type is scalar, (int, basestring, long, float)
+    """
+    return isinstance(val, (basestring, int, long, float))
+
 def _dict_to_protobuf(values, message):
     """
     Converts the python dictionary to proto object representation which will then be
@@ -86,11 +92,13 @@ def _dict_to_protobuf(values, message):
     if isinstance(message, collections.Mapping):
         for key, val in values.items():
             # Create an instance of the proto object and then populate it
-            msg = type(message[key])()
-            _dict_to_protobuf(val, msg)
-            message[key].MergeFrom(msg)
+            if _is_type_scalar(val):
+                message[key] = val
+            else:
+                msg = type(message[key])()
+                _dict_to_protobuf(val, msg)
+                message[key].MergeFrom(msg)
     else:
-
         for key, value in values.items():
             field = message.DESCRIPTOR.fields_by_name.get(key, None)
 
@@ -181,7 +189,10 @@ def _protobuf_to_dict(message):
         if isinstance(value, collections.Mapping):
             containing_dict = {}
             for key, val in value.items():
-                containing_dict[key] = _protobuf_to_dict(val)
+                if _is_type_scalar(val):
+                    containing_dict[key] = val
+                else:
+                    containing_dict[key] = _protobuf_to_dict(val)
             result_dict[field.name] = containing_dict
 
         else:

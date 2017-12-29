@@ -7,6 +7,7 @@ message MainMessage {
     int32 an_int = 4;
     repeated int32 lst_ints = 5;
     map<string, SomeSubMessage> str_to_message_map = 6;
+    map<string, int32> str_to_int_map = 7;
 }
 
 message SomeSubMessage{

@@ -21,6 +21,7 @@ class TestProtoUtilModule(unittest.TestCase):
                                               "lst_longs": [1L, 2L, 3L]
                                               }
                                         }
+        dct["str_to_int_map"] = {"some_str": 1}
         self.data_dct = dct
         self.main_msg_fields = self.data_dct.keys()
 
