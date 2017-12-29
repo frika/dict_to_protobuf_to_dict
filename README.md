@@ -64,7 +64,7 @@ protobuf_to_dict(recv_message)
 Tests are under `tests/` folder. To run, we use [nosetests](https://nose.readthedocs.io/en/latest/)
 
 ```sh
-$ nosetests test/
+$ nosetests tests/
 ```
 
 
